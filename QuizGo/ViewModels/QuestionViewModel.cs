@@ -14,6 +14,7 @@ namespace QuizGo.ViewModels
 
         public QuestionViewModel()
         {
+            timer = new Dispatcher();
             //time = TimeSpan.FromSeconds()
         }
     }
