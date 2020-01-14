@@ -7,23 +7,39 @@
         mc:Ignorable="d"
         Title="QuizGo" Background="#04C582" WindowState="Maximized">
     <DockPanel Margin="40">
-        <!--<StackPanel Orientation="Horizontal" DockPanel.Dock="Top" VerticalAlignment="Top" Height="40">
-            <Label>Welcome Suryanshu</Label>
-            <Label HorizontalAlignment="Center">QuizGO</Label>
-            <TextBox HorizontalAlignment="Right">Hello</TextBox>
-        </StackPanel>-->
-        <Grid DockPanel.Dock="Top">
+        <Grid DockPanel.Dock="Top" MaxHeight="100">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" HorizontalAlignment="Left" Content="Welcome Suryanshu"></Label>
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="25">
+                <Button Margin="5">
+                    <Image Source="/Images/Button-Previous-icon.png"></Image>
+                </Button>
+                <Button Margin="5">
+                    <Image Source="/Images/Button-Next-icon.png"></Image>
+                </Button>
+            </StackPanel>
+            <!--<Label Grid.Column="0" HorizontalAlignment="Left" Content="Welcome Suryanshu"></Label>-->
             <Label Grid.Column="1" HorizontalAlignment="Center" Content="QuizGo"></Label>
-            <TextBlock Grid.Column="2" Text="{Binding Timer}" HorizontalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Column="2" Text="{Binding TimeRemaining}" HorizontalAlignment="Center"></TextBlock>
         </Grid>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Height="40">
-            <Button HorizontalAlignment="Stretch" Width="150" Content="Button"></Button>
-        </StackPanel>
+
+        <ItemsControl></ItemsControl>
+        
+        <Grid DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Height="80">
+            
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+            </Grid>
+       
     </DockPanel>
 </Window>
