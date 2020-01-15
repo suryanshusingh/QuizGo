@@ -66,6 +66,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Data\DBDataContext.cs" />
+    <Compile Include="Data\IQuizRepository.cs" />
+    <Compile Include="Data\QuizRepository.cs" />
     <Compile Include="Migrations\202001141921314_DBCreation.cs" />
     <Compile Include="Migrations\202001141921314_DBCreation.designer.cs">
       <DependentUpon>202001141921314_DBCreation.cs</DependentUpon>
