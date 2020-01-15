@@ -1,4 +1,5 @@
-﻿using QuizGo.Models;
+﻿using QuizGo.Dtos;
+using QuizGo.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,29 +12,89 @@ namespace QuizGo.Data
     class QuizRepository : IQuizRepository
     {
         private readonly DBDataContext context;
+        List<object> Answers;
 
         public QuizRepository()
         {
             context = new DBDataContext();
+            Answers = new List<object>();
         }
 
-        public int CalculateScore()
+        public int CalculateScore(ObservableCollection<object> questionswithanswers)
         {
-            throw new NotImplementedException();
+            int score = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                if (questionswithanswers[i] is SubjectiveQuestionDto)
+                {
+                    var qwitha = (SubjectiveQuestionDto)questionswithanswers[i];
+                    if (qwitha.AnswerByUser == Answers[i].ToString()) score += 10;
+                }
+                else if (questionswithanswers[i] is MCQ1QuestionDto)
+                {
+                    var qwitha = (MCQ1QuestionDto)questionswithanswers[i];
+                    if (qwitha.AnswerByUser == Answers[i].ToString()) score += 10;
+                }
+                else
+                {
+                    var qwitha = (MCQ2QuestionDto)questionswithanswers[i];
+                    bool[] answer = Answers[i] as bool[];
+                    if (qwitha.IsOptionAChecked == answer[0] && qwitha.IsOptionBChecked == answer[1] &&
+                        qwitha.IsOptionCChecked == answer[2] && qwitha.IsOptionDChecked == answer[3]) score += 10;
+                }
+            }
+            return score;
         }
 
-        public ObservableCollection<Question> GetQuestions()
+        public ObservableCollection<object> GetQuestions()
         {
-            ObservableCollection<Question> questions = new ObservableCollection<Question>();
-            
-            var subjectiveQuestions = context.SubjectiveQuestions.OrderBy(r => Guid.NewGuid()).Take(2) ;
-            foreach (var question in subjectiveQuestions) questions.Add(question);
+            ObservableCollection<object> questions = new ObservableCollection<object>();
+
+            var subjectiveQuestions = context.SubjectiveQuestions.OrderBy(r => Guid.NewGuid()).Take(2);
+            foreach (var question in subjectiveQuestions)
+            {
+                questions.Add(new SubjectiveQuestionDto
+                {
+                    QuestionText = question.QuestionText,
+                    AnswerByUser = String.Empty
+                });
+                Answers.Add(question.AnswerText);
+            }
 
             var mcq1Questions = context.MCQ1Questions.OrderBy(r => Guid.NewGuid()).Take(5);
-            foreach (var question in mcq1Questions) questions.Add(question);
+            foreach (var question in mcq1Questions)
+            {
+                questions.Add(new MCQ1QuestionDto
+                {
+                    QuestionText = question.QuestionText,
+                    OptionA = question.OptionA,
+                    OptionB = question.OptionB,
+                    OptionC = question.OptionC,
+                    OptionD = question.OptionD,
+                    AnswerByUser = String.Empty
+                });
+                Answers.Add(question.CorrectOption);
+            }
 
             var mcq2Questions = context.MCQ2Questions.OrderBy(r => Guid.NewGuid()).Take(3);
-            foreach (var question in mcq2Questions) questions.Add(question);
+            foreach (var question in mcq2Questions)
+            {
+                questions.Add(new MCQ2QuestionDto
+                {
+                    QuestionText = question.QuestionText,
+                    OptionA = question.OptionA,
+                    OptionB = question.OptionB,
+                    OptionC = question.OptionC,
+                    OptionD = question.OptionD
+                });
+                Answers.Add(new bool[4]
+                {
+                    question.IsACorrect,
+                    question.IsBCorrect,
+                    question.IsCCorrect,
+                    question.IsDCorrect
+                });
+            }
 
             return questions;
         }

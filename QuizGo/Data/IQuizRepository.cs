@@ -10,8 +10,8 @@ namespace QuizGo.Data
 {
     interface IQuizRepository
     {
-        ObservableCollection<Question> GetQuestions();
+        ObservableCollection<object> GetQuestions();
 
-        int CalculateScore();
+        int CalculateScore(ObservableCollection<object> questionswithanswers);
     }
 }

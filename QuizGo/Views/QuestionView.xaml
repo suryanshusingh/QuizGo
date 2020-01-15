@@ -4,29 +4,33 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuizGo.Views"
-        xmlns:model="clr-namespace:QuizGo.Models"
+        xmlns:Dtos="clr-namespace:QuizGo.Dtos"
+        xmlns:convertor="clr-namespace:QuizGo.Convertors"
         mc:Ignorable="d"
         Title="QuizGo" Background="#04C582" WindowState="Maximized">
 
     <Window.Resources>
-        <DataTemplate DataType="{x:Type model:SubjectiveQuestion}">
-            <Border BorderThickness="2" BorderBrush="Black" Margin="40" CornerRadius="20">
+        <convertor:SingleChoiceMCQConvertor x:Key="singleChoiceMCQConvertor"></convertor:SingleChoiceMCQConvertor>
+
+        <DataTemplate DataType="{x:Type Dtos:SubjectiveQuestionDto}">
+            <Border BorderThickness="2" BorderBrush="Black" Margin="40" CornerRadius="20" Background="#2E3137">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    
+
                     <TextBlock Grid.Row="0" Margin="40" VerticalAlignment="Top" HorizontalAlignment="Center"
-                               FontSize="20"
+                               FontSize="20" Foreground="White"
                                Text="Subjective Question">
                     </TextBlock>
                     <Separator Margin="40,0,40,0"></Separator>
                     <TextBlock Grid.Row="0" Margin="40" VerticalAlignment="Bottom"
-                               FontSize="20"
+                               FontSize="20" Foreground="White"
                                Text="{Binding QuestionText}">
                     </TextBlock>
-                    <TextBox Grid.Row="1" Margin="40,0,40,40">
+                    <TextBox Grid.Row="1" Margin="40,0,40,40"
+                             Text="{Binding AnswerByUser}">
                         <TextBox.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="5"/>
@@ -37,8 +41,8 @@
             </Border>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type model:MCQ1Question}">
-            <Border BorderThickness="2" BorderBrush="Black" Margin="40" CornerRadius="20">
+        <DataTemplate DataType="{x:Type Dtos:MCQ1QuestionDto}">
+            <Border BorderThickness="2" BorderBrush="Black" Margin="40" CornerRadius="20" Background="#2E3137">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
@@ -46,12 +50,12 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Margin="40" VerticalAlignment="Top" HorizontalAlignment="Center"
-                               FontSize="20"
+                               FontSize="20" Foreground="White"
                                Text="Multiple Choice Question With One Correct Answer">
                     </TextBlock>
                     <Separator Margin="40,0,40,0"></Separator>
                     <TextBlock Grid.Row="0" Margin="40" VerticalAlignment="Bottom"
-                               FontSize="20"
+                               FontSize="20" Foreground="White"
                                Text="{Binding QuestionText}">
                     </TextBlock>
                     <Grid Grid.Row="1" Margin="40,0,40,40">
@@ -64,24 +68,36 @@
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <RadioButton Grid.Row="0" Grid.Column="0"
-                                     Content="{Binding OptionA}">
+                                     Foreground="White" FontSize="20"
+                                     Content="{Binding OptionA}"
+                                     IsChecked="{Binding AnswerByUser, Converter={StaticResource singleChoiceMCQConvertor}, 
+                            ConverterParameter=A}">
                         </RadioButton>
                         <RadioButton Grid.Row="0" Grid.Column="1"
-                                     Content="{Binding OptionB}">
+                                     Foreground="White" FontSize="20"
+                                     Content="{Binding OptionB}"
+                                     IsChecked="{Binding AnswerByUser, Converter={StaticResource singleChoiceMCQConvertor}, 
+                            ConverterParameter=B}">
                         </RadioButton>
                         <RadioButton Grid.Row="1" Grid.Column="0"
-                                     Content="{Binding OptionC}">
+                                     Foreground="White" FontSize="20"
+                                     Content="{Binding OptionC}"
+                                     IsChecked="{Binding AnswerByUser, Converter={StaticResource singleChoiceMCQConvertor}, 
+                            ConverterParameter=C}">
                         </RadioButton>
                         <RadioButton Grid.Row="1" Grid.Column="1"
-                                     Content="{Binding OptionD}">
+                                     Foreground="White" FontSize="20"
+                                     Content="{Binding OptionD}"
+                                     IsChecked="{Binding AnswerByUser, Converter={StaticResource singleChoiceMCQConvertor}, 
+                            ConverterParameter=D}">
                         </RadioButton>
                     </Grid>
                 </Grid>
             </Border>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type model:MCQ2Question}">
-            <Border BorderThickness="2" BorderBrush="Black" Margin="40" CornerRadius="20">
+        <DataTemplate DataType="{x:Type Dtos:MCQ2QuestionDto}">
+            <Border BorderThickness="2" BorderBrush="Black" Margin="40" CornerRadius="20" Background="#2E3137">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
@@ -89,12 +105,12 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Margin="40" VerticalAlignment="Top" HorizontalAlignment="Center"
-                               FontSize="20"
+                               FontSize="20" Foreground="White"
                                Text="Multiple Choice Question With Multiple Correct Answers">
                     </TextBlock>
                     <Separator Margin="40,0,40,0"></Separator>
                     <TextBlock Grid.Row="0" Margin="40" VerticalAlignment="Bottom"
-                               FontSize="20"
+                               FontSize="20" Foreground="White"
                                Text="{Binding QuestionText}">
                     </TextBlock>
                     <Grid Grid.Row="1" Margin="40,0,40,40">
@@ -106,18 +122,26 @@
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <RadioButton Grid.Row="0" Grid.Column="0"
-                                     Content="{Binding OptionA}">
-                        </RadioButton>
-                        <RadioButton Grid.Row="0" Grid.Column="1"
-                                     Content="{Binding OptionB}">
-                        </RadioButton>
-                        <RadioButton Grid.Row="1" Grid.Column="0"
-                                     Content="{Binding OptionC}">
-                        </RadioButton>
-                        <RadioButton Grid.Row="1" Grid.Column="1"
-                                     Content="{Binding OptionD}">
-                        </RadioButton>
+                        <CheckBox Grid.Row="0" Grid.Column="0"
+                                     Foreground="White" FontSize="20"
+                                     Content="{Binding OptionA}"
+                                  IsChecked="{Binding IsOptionAChecked}">
+                        </CheckBox>
+                        <CheckBox Grid.Row="0" Grid.Column="1"
+                                     Foreground="White" FontSize="20"
+                                     Content="{Binding OptionB}"
+                                   IsChecked="{Binding IsOptionBChecked}">
+                        </CheckBox>
+                        <CheckBox Grid.Row="1" Grid.Column="0"
+                                     Foreground="White" FontSize="20"
+                                     Content="{Binding OptionC}"
+                                   IsChecked="{Binding IsOptionCChecked}">
+                        </CheckBox>
+                        <CheckBox Grid.Row="1" Grid.Column="1"
+                                     Foreground="White" FontSize="20"
+                                     Content="{Binding OptionD}"
+                                   IsChecked="{Binding IsOptionDChecked}">
+                        </CheckBox>
                     </Grid>
                 </Grid>
             </Border>
@@ -143,7 +167,7 @@
             </StackPanel>
             <!--<Label Grid.Column="0" HorizontalAlignment="Left" Content="Welcome Suryanshu"></Label>-->
             <Label Grid.Column="1" HorizontalAlignment="Center"  VerticalAlignment="Center"
-                   FontSize="35" Foreground="White" Content="QuizGo"></Label>
+                   FontSize="60" Foreground="White" Content="QuizGo" FontWeight="SemiBold" FontFamily="Times New Roman"></Label>
             <TextBlock Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,40,0"
                        VerticalAlignment="Center" Foreground="Red" FontSize="30"
                        Text="{Binding TimeRemaining}" ></TextBlock>
@@ -160,21 +184,36 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Row="0" Grid.Column="0"
+            <Button Grid.Row="0" Grid.Column="0"  Width="200" FontSize="25" Background="#545d6A" Foreground="White"
                     Content="Review"
                     Command="{Binding ReviewCommand}">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="15"/>
+                    </Style>
+                </Button.Resources>
             </Button>
-            <Button Grid.Row="0" Grid.Column="1"
+            <Button Grid.Row="0" Grid.Column="1" Width="200" FontSize="25" Background="#545d6A" Foreground="White"
                     Content="Skip"
                     Command="{Binding SkipCommand}">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="15"/>
+                    </Style>
+                </Button.Resources>
             </Button>
-            <Button Grid.Row="0" Grid.Column="2"
+            <Button Grid.Row="0" Grid.Column="2" Width="200" FontSize="25" Background="#545d6A" Foreground="White"
                     Content="Submit"
                     Command="{Binding SubmitCommand}">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="15"/>
+                    </Style>
+                </Button.Resources>
             </Button>
         </Grid>
         <ContentControl
                  Content="{Binding CurrentQuestion}"></ContentControl>
-       
+
     </DockPanel>
 </Window>

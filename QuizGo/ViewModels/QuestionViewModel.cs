@@ -1,5 +1,4 @@
 ﻿using QuizGo.Data;
-using QuizGo.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,8 +15,8 @@ namespace QuizGo.ViewModels
         TimeSpan time = new TimeSpan(0, 30, 0);
         DispatcherTimer timer;
         private string timeRemaining;
-        private Question currentQuestion;
-        public ObservableCollection<Question> Questions { get; set; } = new ObservableCollection<Question>();
+        private object currentQuestion;
+        public ObservableCollection<object> Questions { get; set; } = new ObservableCollection<object>();
         private IQuizRepository quizRepository = new QuizRepository();
         public RelayCommand PreviousCommand { get; private set; }
         public RelayCommand NextCommand { get; private set; }
@@ -25,6 +24,7 @@ namespace QuizGo.ViewModels
         public RelayCommand SubmitCommand { get; private set; }
         public RelayCommand ReviewCommand { get; private set; }
         private int currentQuestionNumber;
+
 
         public int CurrentQuestionNumber
         {
@@ -41,13 +41,14 @@ namespace QuizGo.ViewModels
         public string TimeRemaining
         {
             get { return timeRemaining; }
-            set { 
+            set
+            {
                 timeRemaining = value;
                 OnPropertyChange("TimeRemaining");
             }
         }
 
-        public Question CurrentQuestion
+        public object CurrentQuestion
         {
             get => currentQuestion;
             set
@@ -57,6 +58,7 @@ namespace QuizGo.ViewModels
             }
         }
 
+        public string CurrentMCQChoice { get; set; }
 
         public QuestionViewModel()
         {
@@ -88,20 +90,20 @@ namespace QuizGo.ViewModels
 
         private void OnSubmitClick()
         {
-            throw new NotImplementedException();
+            int score = quizRepository.CalculateScore(Questions);
         }
 
         private void OnNextClick()
         {
             if (CurrentQuestionNumber == 10) return;
-            CurrentQuestionNumber += 1 ;
-            //CurrentQuestion = Questions[currentQuestionNumber-1];
+
+            CurrentQuestionNumber += 1;
         }
 
         private void OnPreviousClick()
         {
             if (CurrentQuestionNumber == 1) return;
-            CurrentQuestionNumber -= 1 ;
+            CurrentQuestionNumber -= 1;
         }
 
         private void StartTimer()
