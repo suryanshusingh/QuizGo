@@ -14,6 +14,7 @@ namespace QuizGo.Data
         {
 
         }
+        public DbSet<User> Users { get; set; }
 
         public DbSet<SubjectiveQuestion> SubjectiveQuestions { get; set; }
         public DbSet<MCQ1Question> MCQ1Questions { get; set; }

@@ -21,6 +21,7 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="100">
                     <Label Foreground="White" Content="Username:" FontSize="25"></Label>
                     <TextBox Width="250" Margin="40,0,0,0" Background="#545D6A"
+                             FontSize="15" Foreground="White"
                              Text="{Binding Username}"></TextBox>
                 </StackPanel>
                 <Button Width="150" Height="50" FontSize="25" Background="#545d6A" Foreground="White" 

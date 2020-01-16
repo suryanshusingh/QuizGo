@@ -65,6 +65,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Convertors\ButtonEnablerDisabler.cs" />
     <Compile Include="Convertors\SingleChoiceMCQConvertor.cs" />
     <Compile Include="Data\DBDataContext.cs" />
     <Compile Include="Data\IQuizRepository.cs" />
@@ -76,12 +77,17 @@
     <Compile Include="Migrations\202001141921314_DBCreation.designer.cs">
       <DependentUpon>202001141921314_DBCreation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001160645293_user1.cs" />
+    <Compile Include="Migrations\202001160645293_user1.designer.cs">
+      <DependentUpon>202001160645293_user1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\MCQ1Question.cs" />
     <Compile Include="Models\MCQ2Question.cs" />
     <Compile Include="Models\MCQQuestion.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\SubjectiveQuestion.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -130,6 +136,9 @@
     </Compile>
     <EmbeddedResource Include="Migrations\202001141921314_DBCreation.resx">
       <DependentUpon>202001141921314_DBCreation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001160645293_user1.resx">
+      <DependentUpon>202001160645293_user1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

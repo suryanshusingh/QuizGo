@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuizGo.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace QuizGo.ViewModels
 {
     class MainWindowViewModel : BaseViewModel
     {
+		private IQuizRepository quizRepository = new QuizRepository();
 		private bool isLoggedIn;
 		private bool isNotLoggedIn;
 		private QuestionViewModel questionViewModel;
@@ -49,7 +51,7 @@ namespace QuizGo.ViewModels
 		{
 			IsLoggedIn = false;
 			IsNotLoggedIn = true;
-			LoginViewModel = new LoginViewModel();
+			LoginViewModel = new LoginViewModel(quizRepository);
 			LoginViewModel.LoggedIn += OnLoggedIn;
 		}
 
@@ -57,7 +59,7 @@ namespace QuizGo.ViewModels
 		{
 			IsLoggedIn = isLoggedIn;
 			IsNotLoggedIn = !isLoggedIn;
-			QuestionViewModel = new QuestionViewModel();			
+			QuestionViewModel = new QuestionViewModel(quizRepository);			
 		}
 
 	}

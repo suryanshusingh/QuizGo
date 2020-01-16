@@ -11,6 +11,7 @@
     
     <UserControl.Resources>
         <convertor:SingleChoiceMCQConvertor x:Key="singleChoiceMCQConvertor"></convertor:SingleChoiceMCQConvertor>
+        <convertor:ButtonEnablerDisabler x:Key="buttonenablerdisabler"></convertor:ButtonEnablerDisabler>
 
         <DataTemplate DataType="{x:Type Dtos:SubjectiveQuestionDto}">
             <Border BorderThickness="2" BorderBrush="Black" Margin="40" CornerRadius="20" Background="#2E3137">
@@ -165,11 +166,13 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="25">
                 <Button Margin="15,5,5,5"
-                        Command="{Binding PreviousCommand}">
+                        Command="{Binding PreviousCommand}"
+                        IsEnabled="{Binding CurrentQuestionNumber, Converter={StaticResource buttonenablerdisabler}, ConverterParameter=Prev}">
                     <Image Source="/Images/Button-Previous-icon.png"></Image>
                 </Button>
                 <Button Margin="5"
-                        Command="{Binding NextCommand}">
+                        Command="{Binding NextCommand}"
+                        IsEnabled="{Binding CurrentQuestionNumber, Converter={StaticResource buttonenablerdisabler}, ConverterParameter=Next}">
                     <Image Source="/Images/Button-Next-icon.png"></Image>
                 </Button>
             </StackPanel>
@@ -203,7 +206,8 @@
             </Button>
             <Button Grid.Row="0" Grid.Column="1" Width="200" FontSize="25" Background="#545d6A" Foreground="White"
                     Content="Skip"
-                    Command="{Binding SkipCommand}">
+                    Command="{Binding SkipCommand}"
+                    IsEnabled="{Binding CurrentQuestionNumber, Converter={StaticResource buttonenablerdisabler}, ConverterParameter=Next}">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="15"/>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuizGo.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace QuizGo.ViewModels
     class LoginViewModel : BaseViewModel
     {
         public event Action<bool> LoggedIn;
+        private IQuizRepository quizRepository;
         public RelayCommand LoginCommand { get; private set; }
         private string username;
 
@@ -19,17 +21,17 @@ namespace QuizGo.ViewModels
             OnPropertyChange("Username");}
         }
 
-        public LoginViewModel()
+        public LoginViewModel(IQuizRepository quizRepository)
         {
+            this.quizRepository = quizRepository;
             LoginCommand = new RelayCommand(OnClickLogin);
         }
 
         private void OnClickLogin()
         {
             // check for username
-
-            //navigate to new page
-            LoggedIn(true);
+            if (quizRepository.CheckUserExists(Username))
+                LoggedIn(true);
         }
     }
 }

@@ -20,6 +20,13 @@ namespace QuizGo.Data
             Answers = new List<object>();
         }
 
+        public bool CheckUserExists(string username)
+        {
+            var user = context.Users.FirstOrDefault(x => x.Username == username);
+            if (user != null)
+                return true;
+            return false;
+        }
         public int CalculateScore(ObservableCollection<object> questionswithanswers)
         {
             int score = 0;
@@ -297,5 +304,28 @@ namespace QuizGo.Data
             foreach (var i in a) context.MCQ2Questions.Add(i);
             context.SaveChanges();
         }
+        private void AddUsers()
+        {
+            var a = new List<User>();
+            a.Add(new User
+            {
+                Username = "suryanshu"
+            }); 
+            a.Add(new User
+            {
+                Username = "surya"
+            });
+            a.Add(new User
+            {
+                Username = "hello"
+            });
+            a.Add(new User
+            {
+                Username = "partha"
+            });
+            foreach (var i in a) context.Users.Add(i);
+            context.SaveChanges();
+        }
+
     }
 }

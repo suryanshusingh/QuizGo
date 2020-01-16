@@ -1,4 +1,5 @@
 ﻿using QuizGo.Data;
+using QuizGo.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,7 +18,7 @@ namespace QuizGo.ViewModels
         private string timeRemaining;
         private object currentQuestion;
         public ObservableCollection<object> Questions { get; set; } = new ObservableCollection<object>();
-        private IQuizRepository quizRepository = new QuizRepository();
+        private IQuizRepository quizRepository;
         public RelayCommand PreviousCommand { get; private set; }
         public RelayCommand NextCommand { get; private set; }
         public RelayCommand SkipCommand { get; private set; }
@@ -73,10 +74,11 @@ namespace QuizGo.ViewModels
 
         public string CurrentMCQChoice { get; set; }
 
-        public QuestionViewModel()
+        public QuestionViewModel(IQuizRepository quizRepository)
         {
             StartTimer();
             CommandsInstantiation();
+            this.quizRepository = quizRepository;
             Questions = quizRepository.GetQuestions();
             CurrentQuestionNumber = 1;
         }
@@ -94,6 +96,19 @@ namespace QuizGo.ViewModels
         {
             if (CurrentQuestionNumber == 10) return;
 
+            if (Questions[currentQuestionNumber - 1] is MCQ2QuestionDto)
+            {
+                var queswithanswer = Questions[currentQuestionNumber - 1] as MCQ2QuestionDto;
+                queswithanswer.IsOptionAChecked = queswithanswer.IsOptionBChecked = 
+                    queswithanswer.IsOptionCChecked = queswithanswer.IsOptionDChecked = false;
+            }
+            else
+            {
+                var queswithanswer = Questions[currentQuestionNumber - 1] as MCQ1QuestionDto;
+                if (queswithanswer != null) queswithanswer.AnswerByUser = string.Empty;
+                var subjques = Questions[currentQuestionNumber - 1] as SubjectiveQuestionDto;
+                if (subjques != null) subjques.AnswerByUser = string.Empty;
+            }
             CurrentQuestionNumber += 1;
         }
 

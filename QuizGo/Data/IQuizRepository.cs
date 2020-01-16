@@ -10,6 +10,7 @@ namespace QuizGo.Data
 {
     interface IQuizRepository
     {
+        bool CheckUserExists(string username);
         ObservableCollection<object> GetQuestions();
 
         int CalculateScore(ObservableCollection<object> questionswithanswers);
