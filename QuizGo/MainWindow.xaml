@@ -24,5 +24,10 @@
             Converter={StaticResource booltoVisible},Mode=TwoWay}" >
         <local1:QuestionView DataContext="{Binding QuestionViewModel}"/>
         </Grid>
+        
+        <Grid Visibility="{Binding IsSubmit,
+            Converter={StaticResource booltoVisible},Mode=TwoWay}" >
+            <local1:SubmitView DataContext="{Binding SubmitViewModel}"/>
+        </Grid>
     </Grid>
 </Window>

@@ -26,6 +26,7 @@ namespace QuizGo.ViewModels
         public RelayCommand ReviewCommand { get; private set; }
         private int currentQuestionNumber;
         private int[] touched = new int[10];
+        public event Action<bool, int> SubmitClick;
 
         public int CurrentQuestionNumber
         {
@@ -120,6 +121,7 @@ namespace QuizGo.ViewModels
         private void OnSubmitClick()
         {
             int score = quizRepository.CalculateScore(Questions);
+            SubmitClick(true, score);
         }
 
         private void OnNextClick()

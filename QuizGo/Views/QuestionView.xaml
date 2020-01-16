@@ -31,6 +31,7 @@
                                Text="{Binding QuestionNumberAndText}">
                     </TextBlock>
                     <TextBox Grid.Row="1" Margin="40,0,40,40"
+                             FontSize="20"
                              Text="{Binding AnswerByUser}">
                         <TextBox.Resources>
                             <Style TargetType="{x:Type Border}">
@@ -180,7 +181,7 @@
             <Label Grid.Column="1" HorizontalAlignment="Center"  VerticalAlignment="Center"
                    FontSize="60" Foreground="White" Content="QuizGo" FontWeight="SemiBold" FontFamily="Times New Roman"></Label>
             <TextBlock Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,40,0"
-                       VerticalAlignment="Center" Foreground="Red" FontSize="30"
+                       VerticalAlignment="Center" Foreground="Red" FontSize="35" FontWeight="SemiBold"
                        Text="{Binding TimeRemaining}" ></TextBlock>
         </Grid>
 
@@ -195,7 +196,7 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Row="0" Grid.Column="0"  Width="200" FontSize="25" Background="#545d6A" Foreground="White"
+            <!--<Button Grid.Row="0" Grid.Column="0"  Width="200" FontSize="25" Background="#545d6A" Foreground="White"
                     Content="Review"
                     Command="{Binding ReviewCommand}">
                 <Button.Resources>
@@ -203,7 +204,7 @@
                         <Setter Property="CornerRadius" Value="15"/>
                     </Style>
                 </Button.Resources>
-            </Button>
+            </Button>-->
             <Button Grid.Row="0" Grid.Column="1" Width="200" FontSize="25" Background="#545d6A" Foreground="White"
                     Content="Skip"
                     Command="{Binding SkipCommand}"
@@ -211,6 +212,12 @@
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="15"/>
+                        <!--<Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="1"/>
+                                <Setter Property="Background" Value="#f2f2f2"/>
+                            </Trigger>-->
+                        <!--</Style.Triggers>-->
                     </Style>
                 </Button.Resources>
             </Button>

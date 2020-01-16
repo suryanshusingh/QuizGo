@@ -13,6 +13,15 @@ namespace QuizGo.ViewModels
         private IQuizRepository quizRepository;
         public RelayCommand LoginCommand { get; private set; }
         private string username;
+        private bool displayErrorMessage;
+
+        public bool DisplayErrorMessage
+        {
+            get { return displayErrorMessage; }
+            set { displayErrorMessage = value;
+                OnPropertyChange("DisplayErrorMessage");
+            }
+        }
 
         public string Username
         {
@@ -31,7 +40,14 @@ namespace QuizGo.ViewModels
         {
             // check for username
             if (quizRepository.CheckUserExists(Username))
+            {
+                DisplayErrorMessage = false;
                 LoggedIn(true);
+            }
+            else
+            {
+                DisplayErrorMessage = true;
+            }
         }
     }
 }
