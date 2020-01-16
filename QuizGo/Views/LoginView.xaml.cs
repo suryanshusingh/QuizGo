@@ -18,11 +18,11 @@ namespace QuizGo.Views
     /// <summary>
     /// Interaction logic for Login.xaml
     /// </summary>
-    public partial class LoginView : Window
+    public partial class LoginView : UserControl
     {
         public LoginView()
         {
-            this.DataContext = new LoginViewModel();
+            //this.DataContext = new LoginViewModel();
             InitializeComponent();
         }
     }

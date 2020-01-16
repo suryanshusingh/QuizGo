@@ -24,7 +24,7 @@ namespace QuizGo.ViewModels
         public RelayCommand SubmitCommand { get; private set; }
         public RelayCommand ReviewCommand { get; private set; }
         private int currentQuestionNumber;
-
+        private int[] touched = new int[10];
 
         public int CurrentQuestionNumber
         {
@@ -58,6 +58,19 @@ namespace QuizGo.ViewModels
             }
         }
 
+        public int[] Touched
+        {
+            get
+            {
+                return touched;
+            }
+            set
+            {
+                touched = value;
+                OnPropertyChange("Touched");
+            }
+        }
+
         public string CurrentMCQChoice { get; set; }
 
         public QuestionViewModel()
@@ -80,6 +93,7 @@ namespace QuizGo.ViewModels
         private void OnSkipClick()
         {
             if (CurrentQuestionNumber == 10) return;
+
             CurrentQuestionNumber += 1;
         }
 

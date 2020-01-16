@@ -18,11 +18,11 @@ namespace QuizGo.Views
     /// <summary>
     /// Interaction logic for QuestionView.xaml
     /// </summary>
-    public partial class QuestionView : Window
+    public partial class QuestionView : UserControl
     {
         public QuestionView()
         {
-            this.DataContext = new QuestionViewModel();
+            //this.DataContext = new QuestionViewModel();
             InitializeComponent();
         }
     }

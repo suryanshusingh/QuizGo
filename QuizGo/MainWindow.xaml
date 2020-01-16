@@ -4,9 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuizGo"
+        xmlns:local1="clr-namespace:QuizGo.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="QuizGo" WindowState="Maximized"
+        >
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="booltoVisible"></BooleanToVisibilityConverter>
+    </Window.Resources>
+    
     <Grid>
+
+        <Grid Visibility="{Binding IsNotLoggedIn, 
+            Converter={StaticResource booltoVisible} ,Mode=TwoWay}">
+        <local1:LoginView  DataContext="{Binding LoginViewModel}"/>
+        </Grid>
         
+        <Grid Visibility="{Binding IsLoggedIn,
+            Converter={StaticResource booltoVisible},Mode=TwoWay}" >
+        <local1:QuestionView DataContext="{Binding QuestionViewModel}"/>
+        </Grid>
     </Grid>
 </Window>

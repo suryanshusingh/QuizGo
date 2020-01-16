@@ -48,6 +48,7 @@ namespace QuizGo.Data
 
         public ObservableCollection<object> GetQuestions()
         {
+            int questionnumber = 1;
             ObservableCollection<object> questions = new ObservableCollection<object>();
 
             var subjectiveQuestions = context.SubjectiveQuestions.OrderBy(r => Guid.NewGuid()).Take(2);
@@ -56,8 +57,9 @@ namespace QuizGo.Data
                 questions.Add(new SubjectiveQuestionDto
                 {
                     QuestionText = question.QuestionText,
-                    AnswerByUser = String.Empty
-                });
+                    AnswerByUser = String.Empty,
+                    QuestionNumber = questionnumber++
+                }) ;
                 Answers.Add(question.AnswerText);
             }
 
@@ -71,7 +73,8 @@ namespace QuizGo.Data
                     OptionB = question.OptionB,
                     OptionC = question.OptionC,
                     OptionD = question.OptionD,
-                    AnswerByUser = String.Empty
+                    AnswerByUser = String.Empty,
+                    QuestionNumber = questionnumber++
                 });
                 Answers.Add(question.CorrectOption);
             }
@@ -85,7 +88,8 @@ namespace QuizGo.Data
                     OptionA = question.OptionA,
                     OptionB = question.OptionB,
                     OptionC = question.OptionC,
-                    OptionD = question.OptionD
+                    OptionD = question.OptionD,
+                    QuestionNumber = questionnumber++
                 });
                 Answers.Add(new bool[4]
                 {

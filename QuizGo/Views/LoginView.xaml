@@ -1,11 +1,11 @@
-﻿<Window x:Class="QuizGo.Views.LoginView"
+﻿<UserControl x:Class="QuizGo.Views.LoginView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuizGo.Views"
         mc:Ignorable="d"
-        Title="QuizGo" Background="#04C582" WindowState="Maximized">
+        Background="#04C582">
 
     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="40">
         <Grid.RowDefinitions>
@@ -20,11 +20,12 @@
                 <Separator></Separator>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="100">
                     <Label Foreground="White" Content="Username:" FontSize="25"></Label>
-                    <TextBox Width="250" Margin="40,0,0,0" Background="#545D6A"></TextBox>
+                    <TextBox Width="250" Margin="40,0,0,0" Background="#545D6A"
+                             Text="{Binding Username}"></TextBox>
                 </StackPanel>
                 <Button Width="150" Height="50" FontSize="25" Background="#545d6A" Foreground="White" 
                         Command="{Binding LoginCommand}">Login</Button>
             </StackPanel>
         </Border>
     </Grid>
-</Window>
+</UserControl>
