@@ -67,11 +67,14 @@
     </ApplicationDefinition>
     <Compile Include="Convertors\ButtonEnablerDisabler.cs" />
     <Compile Include="Convertors\SingleChoiceMCQConvertor.cs" />
+    <Compile Include="Data\AuthRepository.cs" />
     <Compile Include="Data\DBDataContext.cs" />
+    <Compile Include="Data\IAuthRepository.cs" />
     <Compile Include="Data\IQuizRepository.cs" />
     <Compile Include="Data\QuizRepository.cs" />
     <Compile Include="Dtos\MCQ1QuestionDto.cs" />
     <Compile Include="Dtos\MCQ2QuestionDto.cs" />
+    <Compile Include="Dtos\QuestionDto.cs" />
     <Compile Include="Dtos\SubjectiveQuestionDto.cs" />
     <Compile Include="Migrations\202001141921314_DBCreation.cs" />
     <Compile Include="Migrations\202001141921314_DBCreation.designer.cs">

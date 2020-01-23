@@ -1,4 +1,5 @@
-﻿using QuizGo.Models;
+﻿using QuizGo.Dtos;
+using QuizGo.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,9 +11,8 @@ namespace QuizGo.Data
 {
     interface IQuizRepository
     {
-        bool CheckUserExists(string username);
-        ObservableCollection<object> GetQuestions();
+        ObservableCollection<QuestionDto> GetQuestions();
 
-        int CalculateScore(ObservableCollection<object> questionswithanswers);
+        int CalculateScore(ObservableCollection<QuestionDto> questionswithanswers);
     }
 }

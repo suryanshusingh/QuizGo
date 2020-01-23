@@ -17,7 +17,7 @@ namespace QuizGo.ViewModels
         DispatcherTimer timer;
         private string timeRemaining;
         private object currentQuestion;
-        public ObservableCollection<object> Questions { get; set; } = new ObservableCollection<object>();
+        public ObservableCollection<QuestionDto> Questions { get; set; } = new ObservableCollection<QuestionDto>();
         private IQuizRepository quizRepository;
         public RelayCommand PreviousCommand { get; private set; }
         public RelayCommand NextCommand { get; private set; }

@@ -10,6 +10,7 @@ namespace QuizGo.ViewModels
     class MainWindowViewModel : BaseViewModel
     {
         private IQuizRepository quizRepository = new QuizRepository();
+        private IAuthRepository authRepository = new AuthRepository();
         private bool isLoggedIn;
         private bool isNotLoggedIn;
         private QuestionViewModel questionViewModel;
@@ -78,7 +79,7 @@ namespace QuizGo.ViewModels
         {
             IsLoggedIn = false;
             IsNotLoggedIn = true;
-            LoginViewModel = new LoginViewModel(quizRepository);
+            LoginViewModel = new LoginViewModel(authRepository);
             LoginViewModel.LoggedIn += OnLoggedIn;
         }
 

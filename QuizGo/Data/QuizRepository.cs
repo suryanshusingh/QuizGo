@@ -18,16 +18,10 @@ namespace QuizGo.Data
         {
             context = new DBDataContext();
             Answers = new List<object>();
+            //AddUsers();
         }
 
-        public bool CheckUserExists(string username)
-        {
-            var user = context.Users.FirstOrDefault(x => x.Username == username);
-            if (user != null)
-                return true;
-            return false;
-        }
-        public int CalculateScore(ObservableCollection<object> questionswithanswers)
+        public int CalculateScore(ObservableCollection<QuestionDto> questionswithanswers)
         {
             int score = 0;
             for (int i = 0; i < 10; i++)
@@ -53,10 +47,10 @@ namespace QuizGo.Data
             return score;
         }
 
-        public ObservableCollection<object> GetQuestions()
+        public ObservableCollection<QuestionDto> GetQuestions()
         {
             int questionnumber = 1;
-            ObservableCollection<object> questions = new ObservableCollection<object>();
+            ObservableCollection<QuestionDto> questions = new ObservableCollection<QuestionDto>();
 
             var subjectiveQuestions = context.SubjectiveQuestions.OrderBy(r => Guid.NewGuid()).Take(2);
             foreach (var question in subjectiveQuestions)
@@ -325,6 +319,12 @@ namespace QuizGo.Data
             });
             foreach (var i in a) context.Users.Add(i);
             context.SaveChanges();
+
+            using (var db = new DBDataContext())
+            {
+                db.Users.Add(new User { Username = "p" });
+                db.SaveChanges();
+            }
         }
 
     }

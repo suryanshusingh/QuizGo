@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuizGo.Dtos
+namespace QuizGo.Data
 {
-    class SubjectiveQuestionDto : QuestionDto
-    {      
-        public string AnswerByUser { get; set; }
+    interface IAuthRepository
+    {
+        bool CheckUserExists(string username);
     }
 }

@@ -10,7 +10,7 @@ namespace QuizGo.ViewModels
     class LoginViewModel : BaseViewModel
     {
         public event Action<bool> LoggedIn;
-        private IQuizRepository quizRepository;
+        private IAuthRepository authRepository;
         public RelayCommand LoginCommand { get; private set; }
         private string username;
         private bool displayErrorMessage;
@@ -30,16 +30,16 @@ namespace QuizGo.ViewModels
             OnPropertyChange("Username");}
         }
 
-        public LoginViewModel(IQuizRepository quizRepository)
+        public LoginViewModel(IAuthRepository authRepository)
         {
-            this.quizRepository = quizRepository;
+            this.authRepository = authRepository;
             LoginCommand = new RelayCommand(OnClickLogin);
         }
 
         private void OnClickLogin()
         {
             // check for username
-            if (quizRepository.CheckUserExists(Username))
+            if (authRepository.CheckUserExists(Username))
             {
                 DisplayErrorMessage = false;
                 LoggedIn(true);
