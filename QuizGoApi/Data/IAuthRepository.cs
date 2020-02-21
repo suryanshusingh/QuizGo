@@ -1,4 +1,6 @@
-﻿using System;
+﻿using QuizGoApi.Dtos;
+using QuizGoApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +10,8 @@ namespace QuizGoApi.Data
 {
     public interface IAuthRepository
     {
-        bool CheckUserExists(string username);
-        Task<bool> Login(string username, string email);
+        Task<bool> CheckEmailExistsAsync(string email);
+        Task<User> Login(string email, string password);
+        Task<User> Register(User user, string password);
     }
 }

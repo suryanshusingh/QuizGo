@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using QuizGoApi.Data;
+using QuizGoApi.Dtos;
 
 namespace QuizGoApi.Controllers
 {
@@ -11,16 +12,17 @@ namespace QuizGoApi.Controllers
     [ApiController]
     public class QuizController : ControllerBase
     {
-        private IAuthRepository repo;
-        public QuizController(IAuthRepository repo)
+        private IQuizRepository repo;
+        public QuizController(IQuizRepository repo)
         {
             this.repo = repo;
         }
 
         [HttpGet]
-        public void CheckUserExistsGet()
+        public async Task<IEnumerable<QuestionDto>> GetQuestions()
         {
-            var a = 5;
+            var a = await repo.GetQuestions();
+            return a;
         }
     }
 }

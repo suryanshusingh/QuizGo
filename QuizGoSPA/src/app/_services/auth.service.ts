@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import {map} from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -7,17 +9,32 @@ import { HttpClient } from '@angular/common/http';
 
 
 export class AuthService {
+  jwtHelper = new JwtHelperService();
+  decodedToken: any;
+  currentUser: any;
 
-  readonly rootUrl = 'http://localhost:5000/api/';
-constructor(private httpClient: HttpClient) {
+  readonly rootUrl = 'http://localhost:5000/api/login/';
+  constructor(private http: HttpClient) {
  }
+ 
+ login(email: string, password:string) {
+  let body = { email: email, password: password};
+  return this.http.post(this.rootUrl + 'login', body).pipe(
+    map((response: any) =>  {
+      const user = response;
+      if (user){
+         this.setLocalStorage(user);
+      }
+    })
+  );   
+}
 
- trylogin(name: string, email:string) {
-   var body = {
-     Name:name,
-     Email:email
-   }
-   return this.httpClient.post(this.rootUrl + 'login', body);
- }
+setLocalStorage(user:any){
+ localStorage.setItem("token", user.token);
+ localStorage.setItem('user', JSON.stringify(user.user));
+ this.decodedToken = this.jwtHelper.decodeToken(user.token);
+ this.currentUser = user.user;
+}
+
 
 }

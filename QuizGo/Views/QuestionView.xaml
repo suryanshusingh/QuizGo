@@ -25,8 +25,8 @@
                                FontSize="20" Foreground="White"
                                Text="Subjective Question">
                     </TextBlock>
-                    <Separator Margin="40,0,40,0"></Separator>
-                    <TextBlock Grid.Row="0" Margin="40" VerticalAlignment="Bottom"
+                    <Separator Grid.Row="0"  Margin="40,0,40,0"></Separator>
+                    <TextBlock Grid.Row="0" Margin="40" VerticalAlignment="Bottom" 
                                FontSize="20" Foreground="White"
                                Text="{Binding QuestionNumberAndText}">
                     </TextBlock>
@@ -231,8 +231,7 @@
                 </Button.Resources>
             </Button>
         </Grid>
-        <ContentControl
-                 Content="{Binding CurrentQuestion}"></ContentControl>
+        <ContentControl Content="{Binding CurrentQuestion}"></ContentControl>
 
     </DockPanel>
 </UserControl>

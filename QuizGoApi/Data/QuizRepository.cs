@@ -15,11 +15,14 @@ namespace QuizGoApi.Data
         private readonly DBDataContext context;
         List<object> Answers;
 
-        public QuizRepository()
+        public QuizRepository(DBDataContext context)
         {
-            //context = new DBDataContext();
+            this.context = context;
             Answers = new List<object>();
             //AddUsers();
+            //AddData();
+            //AddMCQData();
+            //AddMCQ2Data();
         }
 
         public int CalculateScore(ObservableCollection<QuestionDto> questionswithanswers)
@@ -48,40 +51,24 @@ namespace QuizGoApi.Data
             return score;
         }
 
-        public ObservableCollection<QuestionDto> GetQuestions()
+        public async Task<ObservableCollection<QuestionDto>> GetQuestions()
         {
             int questionnumber = 1;
             ObservableCollection<QuestionDto> questions = new ObservableCollection<QuestionDto>();
 
-            var subjectiveQuestions = context.SubjectiveQuestions.OrderBy(r => Guid.NewGuid()).Take(2);
-            foreach (var question in subjectiveQuestions)
-            {
-                questions.Add(new SubjectiveQuestionDto
-                {
-                    QuestionText = question.QuestionText,
-                    AnswerByUser = String.Empty,
-                    QuestionNumber = questionnumber++
-                }) ;
-                Answers.Add(question.AnswerText);
-            }
+            await GetSubjectiveQuestions(questionnumber, questions);
 
-            var mcq1Questions = context.MCQ1Questions.OrderBy(r => Guid.NewGuid()).Take(5);
-            foreach (var question in mcq1Questions)
-            {
-                questions.Add(new MCQ1QuestionDto
-                {
-                    QuestionText = question.QuestionText,
-                    OptionA = question.OptionA,
-                    OptionB = question.OptionB,
-                    OptionC = question.OptionC,
-                    OptionD = question.OptionD,
-                    AnswerByUser = String.Empty,
-                    QuestionNumber = questionnumber++
-                });
-                Answers.Add(question.CorrectOption);
-            }
+            await GetMCQ1Questions(3, questions);
 
-            var mcq2Questions = context.MCQ2Questions.OrderBy(r => Guid.NewGuid()).Take(3);
+            await GetMCQ2Questions(8, questions);
+
+            return questions;
+        }
+
+        private async Task GetMCQ2Questions(int questionnumber, ObservableCollection<QuestionDto> questions)
+        {
+            var mcq2QuestionsAll = await context.MCQ2Questions.ToListAsync();
+            var mcq2Questions = mcq2QuestionsAll.OrderBy(r => Guid.NewGuid()).Take(3);
             foreach (var question in mcq2Questions)
             {
                 questions.Add(new MCQ2QuestionDto
@@ -101,8 +88,42 @@ namespace QuizGoApi.Data
                     question.IsDCorrect
                 });
             }
+        }
 
-            return questions;
+        private async Task GetMCQ1Questions(int questionnumber, ObservableCollection<QuestionDto> questions)
+        {
+            var mcq1QuestionsAll = await context.MCQ1Questions.ToListAsync();
+            var mcq1Questions = mcq1QuestionsAll.OrderBy(r => Guid.NewGuid()).Take(5);
+            foreach (var question in mcq1Questions)
+            {
+                questions.Add(new MCQ1QuestionDto
+                {
+                    QuestionText = question.QuestionText,
+                    OptionA = question.OptionA,
+                    OptionB = question.OptionB,
+                    OptionC = question.OptionC,
+                    OptionD = question.OptionD,
+                    AnswerByUser = String.Empty,
+                    QuestionNumber = questionnumber++
+                });
+                Answers.Add(question.CorrectOption);
+            }
+        }
+
+        private async Task GetSubjectiveQuestions(int questionnumber, ObservableCollection<QuestionDto> questions)
+        {
+            var subjectiveQuestionsAll = await context.SubjectiveQuestions.ToListAsync();
+            var subjectiveQuestions = subjectiveQuestionsAll.OrderBy(r => Guid.NewGuid()).Take(2);
+            foreach (var question in subjectiveQuestions)
+            {
+                questions.Add(new SubjectiveQuestionDto
+                {
+                    QuestionText = question.QuestionText,
+                    AnswerByUser = String.Empty,
+                    QuestionNumber = questionnumber++
+                });
+                Answers.Add(question.AnswerText);
+            }
         }
 
         private void AddData()
@@ -304,19 +325,19 @@ namespace QuizGoApi.Data
             var a = new List<User>();
             a.Add(new User
             {
-                Username = "suryanshu"
+                UserName = "suryanshu"
             }); 
             a.Add(new User
             {
-                Username = "surya"
+                UserName = "surya"
             });
             a.Add(new User
             {
-                Username = "hello"
+                UserName = "hello"
             });
             a.Add(new User
             {
-                Username = "partha"
+                UserName = "partha"
             });
             foreach (var i in a) context.Users.Add(i);
             context.SaveChanges();

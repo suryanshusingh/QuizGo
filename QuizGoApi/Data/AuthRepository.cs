@@ -15,22 +15,60 @@ namespace QuizGoApi.Data
         {
             this.context = context;
         }
-        public bool CheckUserExists(string username)
+        public async Task<bool> CheckEmailExistsAsync(string email)
         {
             var users = context.Users.ToList();
-            var user = context.Users.FirstOrDefault(x => x.Username == username);
+            var user = await context.Users.FirstOrDefaultAsync(x => x.Email == email);
             if (user != null)
                 return true;
             return false;
         }
-
-        public async Task<bool> Login(string username, string email)
+        public async Task<User> Register(User user, string password)
         {
-            var users = await context.Users.ToListAsync();
-            var user = context.Users.FirstOrDefault(x => x.Username == username && x.Email == email);
-            if (user != null)
-                return true;
-            return false;
+            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            await context.Users.AddAsync(user);
+            await context.SaveChangesAsync();
+
+            return user;
+        }
+
+        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            }
+        }
+
+        public async Task<User> Login(string email, string password)
+        {
+            var user = await context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            
+            if (user == null)
+                return null;
+            if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            {
+                return null;
+            }
+            return user;
+        }
+
+        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
+            {
+                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                for (int i = 0; i < computedHash.Length; i++)
+                {
+                    if (computedHash[i] != passwordHash[i])
+                        return false;
+                }
+            }
+            return true;
         }
 
         private void AddUsers()
@@ -38,12 +76,12 @@ namespace QuizGoApi.Data
             var a = new List<User>();
             a.Add(new User
             {
-                Username = "suryanshu",
+                UserName = "suryanshu",
                 Email = "singhsuryanshu@gmail.com"
             });
             a.Add(new User
             {
-                Username = "surya",
+                UserName = "surya",
                 Email = "abc@gmail.com"
             });
 
