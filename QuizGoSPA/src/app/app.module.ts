@@ -5,15 +5,19 @@ import { LoginComponent } from './_components/login/login.component';
 import { FormsModule, ReactiveFormsModule }  from '@angular/forms';
 import { AuthService } from './_services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
-import { QuestionsComponent } from './questions/questions.component';
+import { QuestionsComponent } from './_components/questions/questions.component';
 import { AppRoutingModule } from './app-routing.module';
 import { QuizService } from './_services/quiz.service';
+import { StartConfirmationComponent } from './_components/startconfirmation/startconfirmation.component';
+import { QuizComponent } from './_components/quiz/quiz.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       LoginComponent,
-      QuestionsComponent
+      QuizComponent,
+      QuestionsComponent,
+      StartConfirmationComponent
    ],
    imports: [
       BrowserModule,

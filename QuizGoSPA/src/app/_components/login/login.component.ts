@@ -29,12 +29,11 @@ export class LoginComponent implements OnInit {
   login() {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value.email, 
-        this.loginForm.value.password).subscribe(error => {
-            console.log("Netork Error");
-        }, () => {
-          //this.route.navigate(['/questions']);
-          console.log('success');
-        });
+        this.loginForm.value.password).subscribe(next => {
+            console.log("Success");
+        },error => {
+          console.log('error');
+        }, () => this.route.navigate(['/quiz']));
     }
   }
 

@@ -1,0 +1,3 @@
+<app-startconfirmation *ngIf="showConfirmationDialog" [showConfirmation]="showConfirmationDialog" 
+    (showQuestions)='startShowingQuestions($event)'></app-startconfirmation>
+<app-questions *ngIf='showQuestions'></app-questions>

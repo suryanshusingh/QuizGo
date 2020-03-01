@@ -1,0 +1,21 @@
+
+<div *ngIf="showConfirmation" class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+
+     <div class="modal-dialog modal-dialog-centered" role="document">
+    <div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Start Quiz</h5>
+      </div>
+      <div class="modal-body">
+        Rules and Regulations:
+        Timer will start as soon as you will proceed.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="startQuiz()">Understood</button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+</div><!-- /.modal !-->
