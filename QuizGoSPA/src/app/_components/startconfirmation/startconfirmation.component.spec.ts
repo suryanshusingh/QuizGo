@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { StartconfirmationComponent } from './startconfirmation.component';
+import { StartConfirmationComponent } from './startconfirmation.component';
 
 describe('StartconfirmationComponent', () => {
-  let component: StartconfirmationComponent;
-  let fixture: ComponentFixture<StartconfirmationComponent>;
+  let component: StartConfirmationComponent;
+  let fixture: ComponentFixture<StartConfirmationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StartconfirmationComponent ]
+      declarations: [ StartConfirmationComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StartconfirmationComponent);
+    fixture = TestBed.createComponent(StartConfirmationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

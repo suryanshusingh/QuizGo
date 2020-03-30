@@ -6,16 +6,10 @@ using System.Threading.Tasks;
 
 namespace QuizGoApi.Dtos
 {
-    public class QuestionDto
+    public class QuestionsToReturnDto
     {
         public int QuestionNumber { get; set; }
         public string QuestionText { get; set; }
-        public string QuestionNumberAndText
-        {
-            get
-            {
-                return QuestionNumber.ToString() + ". " + QuestionText;
-            }
-        }
+        public string QuestionType { get; set; }
     }
 }

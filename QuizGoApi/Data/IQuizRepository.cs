@@ -11,8 +11,8 @@ namespace QuizGoApi.Data
 {
     public interface IQuizRepository
     {
-        Task<ObservableCollection<QuestionDto>> GetQuestions();
+        Task<IList<Question>> GetQuestions();
 
-        int CalculateScore(ObservableCollection<QuestionDto> questionswithanswers);
+        //int CalculateScore(ObservableCollection<QuestionDto> questionswithanswers);
     }
 }

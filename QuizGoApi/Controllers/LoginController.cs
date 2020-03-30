@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using QuizGoApi.Data;
 using QuizGoApi.Dtos;
+using QuizGoApi.Helpers;
 using QuizGoApi.Models;
 
 namespace QuizGoApi.Controllers
@@ -33,12 +34,14 @@ namespace QuizGoApi.Controllers
             if (userFromRepo == null)
                 return Unauthorized();
 
+            var userToReturn = Mapper.MapUserToReturn(userFromRepo);
+
             string token = GetJwtToken(userFromRepo);
 
             return Ok(new
             {
                 token,
-                userFromRepo
+                userToReturn
             });
         }
         [HttpPost("register")]

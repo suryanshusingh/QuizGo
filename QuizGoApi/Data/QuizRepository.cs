@@ -25,106 +25,109 @@ namespace QuizGoApi.Data
             //AddMCQ2Data();
         }
 
-        public int CalculateScore(ObservableCollection<QuestionDto> questionswithanswers)
+        //public int CalculateScore(ObservableCollection<QuestionDto> questionswithanswers)
+        //{
+        //    int score = 0;
+        //    for (int i = 0; i < 10; i++)
+        //    {
+        //        if (questionswithanswers[i] is SubjectiveQuestionDto)
+        //        {
+        //            var qwitha = (SubjectiveQuestionDto)questionswithanswers[i];
+        //            if (qwitha.AnswerByUser == Answers[i].ToString()) score += 10;
+        //        }
+        //        else if (questionswithanswers[i] is MCQ1QuestionDto)
+        //        {
+        //            var qwitha = (MCQ1QuestionDto)questionswithanswers[i];
+        //            if (qwitha.AnswerByUser == Answers[i].ToString()) score += 10;
+        //        }
+        //        else
+        //        {
+        //            var qwitha = (MCQ2QuestionDto)questionswithanswers[i];
+        //            bool[] answer = Answers[i] as bool[];
+        //            if (qwitha.IsOptionAChecked == answer[0] && qwitha.IsOptionBChecked == answer[1] &&
+        //                qwitha.IsOptionCChecked == answer[2] && qwitha.IsOptionDChecked == answer[3]) score += 10;
+        //        }
+        //    }
+        //    return score;
+        //}
+
+        public async Task<IList<Question>> GetQuestions()
         {
-            int score = 0;
-            for (int i = 0; i < 10; i++)
-            {
-                if (questionswithanswers[i] is SubjectiveQuestionDto)
-                {
-                    var qwitha = (SubjectiveQuestionDto)questionswithanswers[i];
-                    if (qwitha.AnswerByUser == Answers[i].ToString()) score += 10;
-                }
-                else if (questionswithanswers[i] is MCQ1QuestionDto)
-                {
-                    var qwitha = (MCQ1QuestionDto)questionswithanswers[i];
-                    if (qwitha.AnswerByUser == Answers[i].ToString()) score += 10;
-                }
-                else
-                {
-                    var qwitha = (MCQ2QuestionDto)questionswithanswers[i];
-                    bool[] answer = Answers[i] as bool[];
-                    if (qwitha.IsOptionAChecked == answer[0] && qwitha.IsOptionBChecked == answer[1] &&
-                        qwitha.IsOptionCChecked == answer[2] && qwitha.IsOptionDChecked == answer[3]) score += 10;
-                }
-            }
-            return score;
+            var subjectiveQuestions = await context.SubjectiveQuestions.OrderBy(r => Guid.NewGuid()).Take(2).ToListAsync();
+            var mCQ1Questions = await context.MCQ1Questions.OrderBy(r => Guid.NewGuid()).Take(5).ToListAsync();
+            var mCQ2Questions = await context.MCQ2Questions.OrderBy(r => Guid.NewGuid()).Take(3).ToListAsync();
+
+
+            var allQuestions = new List<Question>(subjectiveQuestions.Count +
+                                                mCQ1Questions.Count +
+                                                mCQ2Questions.Count);
+            allQuestions.AddRange(subjectiveQuestions);
+            allQuestions.AddRange(mCQ1Questions);
+            allQuestions.AddRange(mCQ2Questions);
+
+            return allQuestions;
         }
 
-        public async Task<ObservableCollection<QuestionDto>> GetQuestions()
-        {
-            int questionnumber = 1;
-            ObservableCollection<QuestionDto> questions = new ObservableCollection<QuestionDto>();
+        //private async Task GetMCQ2Questions(int questionnumber, ObservableCollection<QuestionDto> questions)
+        //{
+        //    var mcq2QuestionsAll = await context.MCQ2Questions.ToListAsync();
+        //    var mcq2Questions = mcq2QuestionsAll.OrderBy(r => Guid.NewGuid()).Take(3);
+        //    foreach (var question in mcq2Questions)
+        //    {
+        //        questions.Add(new MCQ2QuestionDto
+        //        {
+        //            QuestionText = question.QuestionText,
+        //            OptionA = question.OptionA,
+        //            OptionB = question.OptionB,
+        //            OptionC = question.OptionC,
+        //            OptionD = question.OptionD,
+        //            QuestionNumber = questionnumber++
+        //        });
+        //        Answers.Add(new bool[4]
+        //        {
+        //            question.IsACorrect,
+        //            question.IsBCorrect,
+        //            question.IsCCorrect,
+        //            question.IsDCorrect
+        //        });
+        //    }
+        //}
 
-            await GetSubjectiveQuestions(questionnumber, questions);
+        //private async Task GetMCQ1Questions(int questionnumber, ObservableCollection<QuestionDto> questions)
+        //{
+        //    var mcq1QuestionsAll = await context.MCQ1Questions.ToListAsync();
+        //    var mcq1Questions = mcq1QuestionsAll.OrderBy(r => Guid.NewGuid()).Take(5);
+        //    foreach (var question in mcq1Questions)
+        //    {
+        //        questions.Add(new MCQ1QuestionDto
+        //        {
+        //            QuestionText = question.QuestionText,
+        //            OptionA = question.OptionA,
+        //            OptionB = question.OptionB,
+        //            OptionC = question.OptionC,
+        //            OptionD = question.OptionD,
+        //            AnswerByUser = String.Empty,
+        //            QuestionNumber = questionnumber++
+        //        });
+        //        Answers.Add(question.CorrectOption);
+        //    }
+        //}
 
-            await GetMCQ1Questions(3, questions);
-
-            await GetMCQ2Questions(8, questions);
-
-            return questions;
-        }
-
-        private async Task GetMCQ2Questions(int questionnumber, ObservableCollection<QuestionDto> questions)
-        {
-            var mcq2QuestionsAll = await context.MCQ2Questions.ToListAsync();
-            var mcq2Questions = mcq2QuestionsAll.OrderBy(r => Guid.NewGuid()).Take(3);
-            foreach (var question in mcq2Questions)
-            {
-                questions.Add(new MCQ2QuestionDto
-                {
-                    QuestionText = question.QuestionText,
-                    OptionA = question.OptionA,
-                    OptionB = question.OptionB,
-                    OptionC = question.OptionC,
-                    OptionD = question.OptionD,
-                    QuestionNumber = questionnumber++
-                });
-                Answers.Add(new bool[4]
-                {
-                    question.IsACorrect,
-                    question.IsBCorrect,
-                    question.IsCCorrect,
-                    question.IsDCorrect
-                });
-            }
-        }
-
-        private async Task GetMCQ1Questions(int questionnumber, ObservableCollection<QuestionDto> questions)
-        {
-            var mcq1QuestionsAll = await context.MCQ1Questions.ToListAsync();
-            var mcq1Questions = mcq1QuestionsAll.OrderBy(r => Guid.NewGuid()).Take(5);
-            foreach (var question in mcq1Questions)
-            {
-                questions.Add(new MCQ1QuestionDto
-                {
-                    QuestionText = question.QuestionText,
-                    OptionA = question.OptionA,
-                    OptionB = question.OptionB,
-                    OptionC = question.OptionC,
-                    OptionD = question.OptionD,
-                    AnswerByUser = String.Empty,
-                    QuestionNumber = questionnumber++
-                });
-                Answers.Add(question.CorrectOption);
-            }
-        }
-
-        private async Task GetSubjectiveQuestions(int questionnumber, ObservableCollection<QuestionDto> questions)
-        {
-            var subjectiveQuestionsAll = await context.SubjectiveQuestions.ToListAsync();
-            var subjectiveQuestions = subjectiveQuestionsAll.OrderBy(r => Guid.NewGuid()).Take(2);
-            foreach (var question in subjectiveQuestions)
-            {
-                questions.Add(new SubjectiveQuestionDto
-                {
-                    QuestionText = question.QuestionText,
-                    AnswerByUser = String.Empty,
-                    QuestionNumber = questionnumber++
-                });
-                Answers.Add(question.AnswerText);
-            }
-        }
+        //private async Task GetSubjectiveQuestions(int questionnumber, ObservableCollection<QuestionDto> questions)
+        //{
+        //    var subjectiveQuestionsAll = await context.SubjectiveQuestions.ToListAsync();
+        //    var subjectiveQuestions = subjectiveQuestionsAll.OrderBy(r => Guid.NewGuid()).Take(2);
+        //    foreach (var question in subjectiveQuestions)
+        //    {
+        //        questions.Add(new SubjectiveQuestionDto
+        //        {
+        //            QuestionText = question.QuestionText,
+        //            AnswerByUser = String.Empty,
+        //            QuestionNumber = questionnumber++
+        //        });
+        //        Answers.Add(question.AnswerText);
+        //    }
+        //}
 
         private void AddData()
         {

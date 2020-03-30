@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace QuizGoApi.Dtos
 {
-    public class SubjectiveQuestionDto : QuestionDto
-    {      
-        public string AnswerByUser { get; set; }
+    public class SubjectiveQuestionDto : QuestionsToReturnDto
+    {
+        public int SubjectiveId { get; set; }
     }
 }
